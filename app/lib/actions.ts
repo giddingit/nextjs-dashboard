@@ -70,3 +70,15 @@ export async function updateInvoice(id: string, formData: FormData) {
     // Redirect to the invoices listing page
     redirect('/dashboard/invoices');
 }
+
+// Action to delete an invoice
+export async function deleteInvoice(id: string) {
+    // Delete the invoice from the database
+    await sql`
+        DELETE FROM invoices
+        WHERE id = ${id}
+    `;
+
+    // Revalidate the invoices listing page
+    revalidatePath('/dashboard/invoices');
+}
